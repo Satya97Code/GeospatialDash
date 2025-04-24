@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+import os
 from utils.data_loader import load_data, handle_uploaded_file, get_sample_datasets
 
 def create_sidebar():
@@ -155,6 +156,25 @@ def create_sidebar():
             st.session_state.filters = {}
             st.rerun()
             
+        # Save as sample data
+        if st.session_state.data is not None:
+            st.sidebar.markdown("---")
+            st.sidebar.subheader("Save as Sample Dataset")
+            
+            if st.sidebar.button("📥 Save Current Data as Sample"):
+                # Create data directory if it doesn't exist
+                os.makedirs("data", exist_ok=True)
+                
+                # Save to GeoJSON
+                try:
+                    st.session_state.data.to_file("data/custom_data.geojson", driver="GeoJSON")
+                    st.sidebar.success("✅ Saved as sample dataset!")
+                    
+                    # Need to restart to see the new sample dataset
+                    st.rerun()
+                except Exception as e:
+                    st.sidebar.error(f"Error saving data: {str(e)}")
+        
         # About section
         st.sidebar.markdown("---")
         st.sidebar.subheader("About")
