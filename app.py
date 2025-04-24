@@ -98,7 +98,7 @@ def main():
     # Footer
     st.markdown("""
         <div style="border-top: 1px solid #e6e6e6; margin-top: 20px; padding-top: 10px; text-align: center; font-size: 0.8em;">
-            Geospatial Analytics Dashboard | Built with Streamlit
+            Geospatial Analytics Dashboard | Built with Streamlit | By Satya Prakash Dalei
         </div>
     """, unsafe_allow_html=True)
 
