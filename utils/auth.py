@@ -91,22 +91,16 @@ def show_login_page():
     }
     .login-card {
         display: flex;
-        max-width: 800px;
-        width: 90%;
+        max-width: 600px;
+        width: 100%;
         box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         border-radius: 12px;
         overflow: hidden;
         background-color: white;
-    }
-    .login-image {
-        flex: 1;
-        background: url('https://img.icons8.com/ios-filled/500/user.png') center no-repeat;
-        background-size: 60%;
-        background-color: #f9f9f9;
+        padding: 40px;
     }
     .login-form {
-        flex: 1;
-        padding: 40px;
+        width: 100%;
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -115,6 +109,7 @@ def show_login_page():
         margin-bottom: 20px;
         color: #333;
         font-weight: 600;
+        text-align: center;
     }
     .login-form input {
         margin-bottom: 15px;
@@ -140,11 +135,11 @@ def show_login_page():
         color: #888;
         margin-top: 10px;
         font-size: 12px;
+        text-align: center;
     }
     </style>
     <div class="main-container">
         <div class="login-card">
-            <div class="login-image"></div>
             <div class="login-form">
     """, unsafe_allow_html=True)
 
