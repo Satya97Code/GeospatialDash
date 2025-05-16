@@ -119,7 +119,51 @@ def auth_required(func):
 
 def show_login_page():
     """Display the login page"""
-    st.title("Login")
+    # Create a header with logo and title
+    col1, col2 = st.columns([1, 5])
+    with col1:
+        # Use an emoji as a logo temporarily (would be replaced with a real logo image)
+        st.markdown("<h1 style='font-size: 30px; margin: 0; padding: 0;'>🌍</h1>", unsafe_allow_html=True)
+    with col2:
+        st.markdown("<h1 style='font-size: 24px; margin: 0; padding: 0;'>Geospatial Analytics Dashboard</h1>", unsafe_allow_html=True)
+    
+    st.markdown("<hr style='margin: 10px 0; padding: 0;'>", unsafe_allow_html=True)
+    
+    # Create a centered login box with custom CSS
+    st.markdown("""
+    <style>
+    .login-container {
+        max-width: 400px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .stTabs [data-baseweb="tab-list"] {
+        gap: 2px;
+        margin-bottom: 10px;
+    }
+    .stTabs [data-baseweb="tab"] {
+        height: 40px;
+        white-space: pre-wrap;
+        background-color: #f0f2f6;
+        border-radius: 4px 4px 0 0;
+        gap: 1px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+    .stTabs [aria-selected="true"] {
+        background-color: #4c78db;
+        color: white;
+    }
+    div[data-testid="stVerticalBlock"] > div[data-testid="stVerticalBlock"] {
+        padding: 0 5px;
+    }
+    </style>
+    <div class="login-container">
+        <h2 style="text-align: center; margin-bottom: 20px;">Login</h2>
+    """, unsafe_allow_html=True)
     
     # Create tabs for login and sign up
     tab1, tab2 = st.tabs(["Login", "Sign Up"])
@@ -134,7 +178,7 @@ def show_login_page():
         st.image(captcha_bytes, width=200)
         captcha_input = st.text_input("Enter the 6 digits shown above", key="login_captcha")
         
-        if st.button("Login"):
+        if st.button("Login", use_container_width=True):
             if st.session_state.login_attempts >= 3:
                 st.error("Too many failed login attempts. Please try again later.")
                 return
@@ -175,7 +219,7 @@ def show_login_page():
         st.image(captcha_bytes, width=200)
         captcha_input = st.text_input("Enter the 6 digits shown above", key="signup_captcha")
         
-        if st.button("Sign Up"):
+        if st.button("Sign Up", use_container_width=True):
             if not captcha_input or captcha_input != st.session_state.captcha_text:
                 st.error("CAPTCHA verification failed. Please try again.")
                 st.session_state.captcha_text = generate_captcha()  # Generate new CAPTCHA
@@ -202,6 +246,9 @@ def show_login_page():
             save_users(users)
             st.success("Account created successfully! Please login.")
             st.session_state.captcha_text = generate_captcha()  # Generate new CAPTCHA
+            
+    # Close the login container div
+    st.markdown("</div>", unsafe_allow_html=True)
 
 def logout():
     """Log out the user and clear session"""
