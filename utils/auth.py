@@ -81,58 +81,82 @@ def auth_required(func):
 def show_login_page():
     st.markdown("""
     <style>
-    body {
-        background: linear-gradient(120deg, #1e3c72, #2a5298, #ff4e50);
-    }
-    .login-wrapper {
+    .main-container {
         display: flex;
         justify-content: center;
         align-items: center;
-        height: 90vh;
+        height: 100vh;
+        background-color: #ffffff;
+        font-family: 'Segoe UI', sans-serif;
     }
-    .login-box {
-        background-color: rgba(255, 255, 255, 0.1);
-        backdrop-filter: blur(10px);
-        padding: 30px;
-        border-radius: 20px;
+    .login-card {
+        display: flex;
+        max-width: 800px;
+        width: 90%;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        border-radius: 12px;
+        overflow: hidden;
+        background-color: white;
+    }
+    .login-image {
+        flex: 1;
+        background: url('https://img.icons8.com/ios-filled/500/user.png') center no-repeat;
+        background-size: 60%;
+        background-color: #f9f9f9;
+    }
+    .login-form {
+        flex: 1;
+        padding: 40px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+    .login-form h2 {
+        margin-bottom: 20px;
+        color: #333;
+        font-weight: 600;
+    }
+    .login-form input {
+        margin-bottom: 15px;
+        padding: 12px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
         width: 100%;
-        max-width: 400px;
-        text-align: center;
-        color: white;
     }
-    .login-box input {
-        background-color: rgba(255, 255, 255, 0.2);
+    .login-form button {
+        padding: 12px;
         border: none;
+        border-radius: 25px;
+        background-color: #63c132;
         color: white;
-    }
-    .login-box label {
-        color: #eee;
-    }
-    .stButton>button {
-        background-color: #ffffff33;
-        color: white;
-        border-radius: 20px;
         font-weight: bold;
-        border: none;
-        transition: 0.3s;
+        cursor: pointer;
+        margin-top: 10px;
     }
-    .stButton>button:hover {
-        background-color: #ffffff55;
+    .login-form button:hover {
+        background-color: #4ea424;
+    }
+    .login-form small {
+        color: #888;
+        margin-top: 10px;
+        font-size: 12px;
     }
     </style>
-    <div class="login-wrapper">
-        <div class="login-box">
+    <div class="main-container">
+        <div class="login-card">
+            <div class="login-image"></div>
+            <div class="login-form">
     """, unsafe_allow_html=True)
 
-    st.markdown("<h2>Login</h2>", unsafe_allow_html=True)
-    username = st.text_input("Username", key="login_username")
-    password = st.text_input("Password", type="password", key="login_password")
+    st.markdown("<h2>Member Login</h2>", unsafe_allow_html=True)
+    username = st.text_input("Email", key="login_username", label_visibility="collapsed", placeholder="Email")
+    password = st.text_input("Password", type="password", key="login_password", label_visibility="collapsed", placeholder="Password")
     st.write("Verify CAPTCHA:")
     captcha_bytes = generate_captcha_image(st.session_state.captcha_text)
     st.image(captcha_bytes, width=200)
     captcha_input = st.text_input("Enter the 6 digits shown above", key="login_captcha")
 
-    if st.button("Login"):
+    if st.button("LOGIN"):
         if st.session_state.login_attempts >= 3:
             st.error("Too many failed login attempts. Please try again later.")
             return
@@ -155,7 +179,10 @@ def show_login_page():
             st.session_state.login_attempts += 1
             st.session_state.captcha_text = generate_captcha()
 
-    st.markdown("</div></div>", unsafe_allow_html=True)
+    st.markdown("<small>Forgot Username / Password?</small>", unsafe_allow_html=True)
+    st.markdown("<small style='margin-top: 10px;'>Create your Account →</small>", unsafe_allow_html=True)
+
+    st.markdown("</div></div></div>", unsafe_allow_html=True)
 
 def logout():
     if st.session_state.username:
